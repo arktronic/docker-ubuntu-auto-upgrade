@@ -1,0 +1,19 @@
+#!/usr/bin/python3
+
+import apt
+import os
+import signal
+import syslog
+
+try:
+  cache = apt.Cache()
+  cache.update()
+  cache.open(None)
+  cache.upgrade()
+  change_count = len(cache.get_changes())
+  if change_count > 0:
+    syslog.syslog(syslog.LOG_NOTICE, 'apt upgrade: processing ' + str(change_count) + ' change(s)')
+    cache.commit()
+    os.kill(1, signal.SIGTERM)
+except Exception as e:
+  syslog.syslog(syslog.LOG_ERR, 'apt upgrade error: ' + str(e))
