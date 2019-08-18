@@ -9,5 +9,6 @@ COPY ./docker-apt-upgrade /usr/bin/docker-apt-upgrade
 RUN chmod +x /usr/bin/docker-apt-upgrade
 RUN echo "0 0 * * * root /usr/bin/docker-apt-upgrade" >> /etc/crontab
 RUN touch /etc/default/locale
+RUN addgroup syslog
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
