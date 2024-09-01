@@ -7,10 +7,11 @@ COPY ./supervisord.conf /etc/supervisor/supervisord.conf
 COPY ./docker-apt-upgrade /usr/bin/docker-apt-upgrade
 COPY ./bootstrap.sh /bootstrap.sh
 
-RUN chmod +x /usr/bin/docker-apt-upgrade
-RUN echo "0 0 * * * root /usr/bin/docker-apt-upgrade" >> /etc/crontab
-RUN touch /etc/default/locale
-RUN addgroup syslog
+RUN chmod +x /usr/bin/docker-apt-upgrade \
+ && chmod +x /bootstrap.sh \
+ && echo "0 0 * * * root /usr/bin/docker-apt-upgrade" >> /etc/crontab \
+ && touch /etc/default/locale \
+ && addgroup syslog
 
 VOLUME /conf
 
